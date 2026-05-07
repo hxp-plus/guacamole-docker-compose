@@ -48,7 +48,10 @@ services:
   # guacd
   guacd:
     container_name: guacd_compose
-    image: guacamole/guacd:x.x.x
+    build:
+      context: .
+      dockerfile: guacd/Dockerfile
+    image: guacamole/guacd:x.x.x-cjk
     networks:
       - guacnetwork_compose
     restart: always
@@ -57,6 +60,8 @@ services:
     - ./record:/record:rw
 ...
 ~~~
+
+This repository includes a tiny custom `guacd` image layer for terminal rendering. It installs `Source Code Pro` for Latin text and `Source Han Sans CN` for Simplified Chinese glyphs, then maps `monospace` through `fontconfig` so Guacamole SSH sessions keep stable Latin metrics while rendering Chinese with fuller strokes and consistent visual weight.
 
 #### PostgreSQL
 The following part of docker-compose.yml will create an instance of PostgreSQL using the official docker image. This image is highly configurable using environment variables. It will for example initialize a database if an initialization script is found in the folder `/docker-entrypoint-initdb.d` within the image. Since we map the local folder `./init` inside the container as `docker-entrypoint-initdb.d` we can initialize the database for guacamole using our own script (`./init/initdb.sql`). You can read more about the details of the official postgres image [here](http://).

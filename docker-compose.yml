@@ -101,7 +101,10 @@ services:
   # guacd
   guacd:
     container_name: guacd_compose
-    image: guacamole/guacd:1.6.0
+    build:
+      context: .
+      dockerfile: guacd/Dockerfile
+    image: guacamole/guacd:1.6.0-cjk
     networks:
       - guacnetwork_compose
     restart: always
