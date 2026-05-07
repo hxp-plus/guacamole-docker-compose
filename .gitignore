@@ -1,6 +1,4 @@
-.gitignore
 data/
-nginx/ssl/
-init/initdb.sql
+init/
 drive/
 record/
